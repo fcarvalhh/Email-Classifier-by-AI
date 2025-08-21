@@ -1,0 +1,32 @@
+# Configuração do Render para Email Classifier AI
+# Este arquivo é opcional - você pode usar a interface web do Render
+
+services:
+  - type: web
+    name: email-classifier-ai
+    runtime: python3
+    
+    # Comandos de build e execução
+    buildCommand: cd backend && pip install -r requirements.txt && python -m spacy download pt_core_news_sm
+    startCommand: cd backend && gunicorn -w 4 -b 0.0.0.0:$PORT app:app
+    
+    # Configurações de saúde e rede
+    healthCheckPath: /api/health
+    
+    # Configurações de recursos
+    plan: starter  # ou 'free' para plano gratuito
+    
+    # Variáveis de ambiente
+    envVars:
+      - key: FLASK_CONFIG
+        value: production
+      - key: SECRET_KEY
+        generateValue: true  # Render gerará automaticamente
+      - key: OPENAI_API_KEY
+        sync: false  # Precisa ser configurada manualmente
+      - key: LOG_LEVEL
+        value: INFO
+    
+    # Configurações de auto-deploy
+    autoDeploy: true
+    branch: main

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Classifier AI - Classificação Inteligente de Emails</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-envelope-check me-2 fs-4"></i>
+                <span class="fw-bold">Email Classifier AI</span>
+            </a>
+            
+            <div class="d-flex align-items-center">
+                <!-- Dark Mode Toggle -->
+                <div class="form-check form-switch me-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeToggle">
+                    <label class="form-check-label text-white" for="darkModeToggle">
+                        <i class="bi bi-moon-stars"></i>
+                    </label>
+                </div>
+                
+                <!-- API Status -->
+                <span class="badge bg-success" id="apiStatus" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Status da API">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Online
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Hero Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1 class="display-4 fw-bold text-primary mb-3">
+                        <i class="bi bi-robot me-3"></i>
+                        Classificação Inteligente de Emails
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        Use inteligência artificial para classificar seus emails como produtivos ou improdutivos 
+                        e receber sugestões de respostas automáticas.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0 upload-card">
+                    <div class="card-header bg-gradient text-white text-center py-3">
+                        <h4 class="mb-0">
+                            <i class="bi bi-cloud-upload me-2"></i>
+                            Analisar Email
+                        </h4>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <!-- Nav Tabs for Input Methods -->
+                        <ul class="nav nav-pills nav-justified mb-4" id="inputTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="text-tab" data-bs-toggle="pill" data-bs-target="#text-input" type="button" role="tab">
+                                    <i class="bi bi-type me-2"></i>Texto Manual
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="file-tab" data-bs-toggle="pill" data-bs-target="#file-input" type="button" role="tab">
+                                    <i class="bi bi-file-earmark-text me-2"></i>Upload de Arquivo
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content" id="inputTabsContent">
+                            <!-- Text Input Tab -->
+                            <div class="tab-pane fade show active" id="text-input" role="tabpanel">
+                                <form id="textForm">
+                                    <div class="mb-3">
+                                        <label for="emailText" class="form-label fw-semibold">
+                                            <i class="bi bi-pencil-square me-2"></i>Conteúdo do Email
+                                        </label>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="emailText" 
+                                            rows="8" 
+                                            placeholder="Cole aqui o conteúdo do email que deseja analisar..."
+                                            maxlength="10000"
+                                        ></textarea>
+                                        <div class="form-text">
+                                            <span id="charCount">0</span>/10.000 caracteres
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 submit-btn">
+                                        <i class="bi bi-magic me-2"></i>
+                                        <span class="btn-text">Analisar Email</span>
+                                        <span class="spinner-border spinner-border-sm d-none ms-2" role="status"></span>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- File Input Tab -->
+                            <div class="tab-pane fade" id="file-input" role="tabpanel">
+                                <form id="fileForm" enctype="multipart/form-data">
+                                    <div class="mb-4">
+                                        <label for="fileUpload" class="form-label fw-semibold">
+                                            <i class="bi bi-file-earmark-arrow-up me-2"></i>Selecionar Arquivo
+                                        </label>
+                                        <input 
+                                            class="form-control form-control-lg" 
+                                            type="file" 
+                                            id="fileUpload" 
+                                            accept=".txt,.pdf"
+                                            name="file"
+                                        >
+                                        <div class="form-text">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Formatos aceitos: .txt, .pdf (máximo 16MB)
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Drag & Drop Area -->
+                                    <div class="upload-area border-2 border-dashed rounded-3 p-4 text-center mb-4" id="dropArea">
+                                        <i class="bi bi-cloud-upload fs-1 text-muted mb-3"></i>
+                                        <p class="mb-0">
+                                            <strong>Arraste e solte o arquivo aqui</strong><br>
+                                            <span class="text-muted">ou clique para selecionar</span>
+                                        </p>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 submit-btn">
+                                        <i class="bi bi-magic me-2"></i>
+                                        <span class="btn-text">Analisar Arquivo</span>
+                                        <span class="spinner-border spinner-border-sm d-none ms-2" role="status"></span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="row justify-content-center mt-5 d-none" id="resultsSection">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 results-card">
+                    <div class="card-header bg-success text-white py-3">
+                        <h4 class="mb-0 text-center">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Resultado da Análise
+                        </h4>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <!-- Classification Result -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 bg-light h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-tags fs-1 text-primary mb-3"></i>
+                                        <h5 class="card-title mb-3">Classificação</h5>
+                                        <span class="badge fs-6 py-2 px-3 mb-3" id="categoryBadge">
+                                            <i class="bi bi-circle-fill me-2"></i>
+                                            <span id="categoryText">-</span>
+                                        </span>
+                                        <div class="mt-3">
+                                            <small class="text-muted">Confiança:</small>
+                                            <div class="progress mt-2" style="height: 8px;">
+                                                <div class="progress-bar" id="confidenceBar" role="progressbar" style="width: 0%"></div>
+                                            </div>
+                                            <small class="text-muted mt-1 d-block" id="confidenceText">0%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Suggested Response -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card border-0 bg-light h-100">
+                                    <div class="card-body">
+                                        <div class="text-center mb-3">
+                                            <i class="bi bi-reply fs-1 text-success"></i>
+                                            <h5 class="card-title mt-2">Resposta Sugerida</h5>
+                                        </div>
+                                        <div class="border rounded p-3 bg-white">
+                                            <p class="mb-0 text-muted" id="suggestedResponse">
+                                                <em>Nenhuma resposta gerada ainda...</em>
+                                            </p>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-sm mt-3 w-100" id="copyResponseBtn">
+                                            <i class="bi bi-copy me-2"></i>Copiar Resposta
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Original Text Preview -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card border-0 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="bi bi-eye me-2"></i>Prévia do Texto Analisado
+                                        </h6>
+                                        <div class="border rounded p-3 bg-white" style="max-height: 200px; overflow-y: auto;">
+                                            <small class="text-muted" id="originalTextPreview">
+                                                <em>Texto original aparecerá aqui...</em>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="text-center mt-4">
+                            <button class="btn btn-outline-secondary me-2" id="clearResultsBtn">
+                                <i class="bi bi-arrow-clockwise me-2"></i>Nova Análise
+                            </button>
+                            <button class="btn btn-outline-info" id="downloadResultsBtn">
+                                <i class="bi bi-download me-2"></i>Baixar Resultado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Info Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card border-0 bg-light categories-info-section">
+                    <div class="card-body">
+                        <h5 class="text-center mb-4">
+                            <i class="bi bi-info-circle me-2"></i>Sobre as Categorias
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <span class="badge bg-success rounded-pill me-3 mt-1">
+                                        <i class="bi bi-check-lg"></i>
+                                    </span>
+                                    <div>
+                                        <h6 class="fw-bold text-success">Email Produtivo</h6>
+                                        <p class="text-muted small mb-0">
+                                            Emails relacionados a trabalho, projetos, reuniões, prazos, 
+                                            propostas comerciais e outras atividades importantes que requerem atenção.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start mb-3">
+                                    <span class="badge bg-danger rounded-pill me-3 mt-1">
+                                        <i class="bi bi-x-lg"></i>
+                                    </span>
+                                    <div>
+                                        <h6 class="fw-bold text-danger">Email Improdutivo</h6>
+                                        <p class="text-muted small mb-0">
+                                            Emails de spam, promoções, newsletters não solicitados, 
+                                            propaganda e outros conteúdos que não agregam valor produtivo.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">
+                <i class="bi bi-gear-fill me-2"></i>
+                Email Classifier AI - Powered by Inteligência Artificial
+            </p>
+            
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer"></div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="static/js/app.js"></script>
+</body>
+</html>
