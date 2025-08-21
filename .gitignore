@@ -111,12 +111,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Email Classifier AI specific
-backend/uploads/
-backend/.env
-backend/config_local.py
-*.pdf
-*.txt
+
 
 # IDE
 .vscode/

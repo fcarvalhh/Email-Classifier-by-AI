@@ -1,0 +1,16 @@
+Flask==2.3.3
+Flask-CORS==4.0.0
+PyPDF2==3.0.1
+pdfplumber==0.9.0
+nltk==3.8.1
+# spaCy com versões pré-compiladas para Windows
+spacy[lookups]==3.4.4
+requests==2.31.0
+Werkzeug==2.3.7
+python-dotenv==1.0.0
+
+# Dependências específicas do Windows para evitar compilação
+# Usar --only-binary=all para forçar uso de wheels pré-compilados
+
+# Para instalar o modelo do spaCy em português (opcional no Windows):
+# python -m spacy download pt_core_news_sm
