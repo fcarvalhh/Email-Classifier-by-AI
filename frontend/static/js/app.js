@@ -592,3 +592,4 @@ setInterval(() => {
         window.emailApp.checkApiHealth();
     }
 }, 60000); // A cada minuto
+

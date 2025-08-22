@@ -22,7 +22,7 @@ Frontend
 - 📱 **Mobile-first** e totalmente responsivo
 - 🔄 Comunicação **AJAX** sem reloads
 
-### Backend
+Backend
 - 🐍 **Python 3.8+** com **Flask**
 - 📄 Processamento de **PDF** e **TXT**
 - 🧠 **NLP** avançado com **spaCy** e **NLTK**
@@ -32,7 +32,7 @@ Frontend
 - ⚡ **API RESTful** com validação
 - 🛡️ Tratamento robusto de erros
 
-## 🏗️ Arquitetura
+Arquitetura
 
 ```
 📦 Email Classifier AI
@@ -54,7 +54,7 @@ Frontend
 └── 📚 README.md
 ```
 
-## 🛠️ Instalação
+Instalação
 
 ### Pré-requisitos
 - **Python 3.8+**
@@ -89,8 +89,7 @@ python -m spacy download pt_core_news_sm
 ```bash
 python -m spacy download pt_core_news_sm
 ```
-
-### 4. Configure a API OpenAI
+Configure a API OpenAI
 Crie um arquivo `.env` na pasta `backend/`:
 ```env
 # Configurações da aplicação Email Classifier AI
@@ -117,7 +116,7 @@ LOG_LEVEL=INFO
 - `gpt-4`: Mais preciso, mas mais caro
 - `gpt-4-turbo`: Balanceado entre velocidade e precisão
 
-## 🚀 Execução
+Execução
 
 ### Modo Desenvolvimento
 ```bash
@@ -133,7 +132,7 @@ cd backend
 gunicorn -w 4 -b 0.0.0.0:5000 app:app
 ```
 
-## 📖 Como Usar
+Como Usar
 
 ### 1. **Inserção de Texto Manual**
    - Acesse a aba "Texto Manual"
@@ -152,14 +151,14 @@ gunicorn -w 4 -b 0.0.0.0:5000 app:app
    - 💬 **Resposta Sugerida**: Texto para resposta automática
    - 📋 **Copiar Resposta**: Botão para copiar para área de transferência
 
-## 🎯 Categorias de Email
+Categorias de Email
 
 | Categoria | Descrição | Exemplos |
 |-----------|-----------|----------|
 | 🟢 **Produtivo** | Emails relacionados a trabalho, projetos, prazos | Reuniões, propostas, contratos, relatórios |
 | 🔴 **Improdutivo** | Emails de spam, promoções, newsletters não solicitados | Propaganda, ofertas, phishing, malware |
 
-## 🔧 API Endpoints
+API Endpoints
 
 ### `POST /api/classify`
 Classifica um email e gera resposta automática.
@@ -196,7 +195,7 @@ Verifica o status da API.
 }
 ```
 
-## 🧠 Processamento NLP
+Processamento NLP
 
 O sistema utiliza várias técnicas de processamento de linguagem natural:
 
@@ -206,7 +205,7 @@ O sistema utiliza várias técnicas de processamento de linguagem natural:
 4. **Lemmatização**: Reduz palavras à forma canônica
 5. **Extração de Palavras-chave**: Identifica termos importantes
 
-## 🎨 Recursos Visuais
+Recursos Visuais
 
 - 🎨 **Design Moderno**: Interface limpa e profissional
 - 🌙 **Dark Mode**: Alternância entre temas claro e escuro
@@ -216,7 +215,7 @@ O sistema utiliza várias técnicas de processamento de linguagem natural:
 - 💡 **Tooltips**: Explicações contextuais
 - 🎯 **Ícones**: Interface rica em elementos visuais
 
-## 🤖 Integração com OpenAI
+Integração com OpenAI
 
 O sistema utiliza a poderosa API da OpenAI para classificação inteligente de emails. Para ativar:
 
@@ -231,17 +230,8 @@ O sistema utiliza a poderosa API da OpenAI para classificação inteligente de e
 
 **Fallback**: Quando a API da OpenAI não está configurada, o sistema usa classificação local baseada em palavras-chave.
 
-## 🚀 Próximas Funcionalidades
 
-- [ ] Histórico de classificações
-- [ ] Análise em lote de múltiplos emails
-- [ ] Dashboard com estatísticas
-- [ ] Exportação de relatórios
-- [ ] Integração com provedores de email
-- [ ] Machine Learning customizado
-- [ ] API para integração externa
-
-## 🛡️ Segurança
+ Segurança
 
 - ✅ Validação de arquivos (tipo e tamanho)
 - ✅ Sanitização de inputs
